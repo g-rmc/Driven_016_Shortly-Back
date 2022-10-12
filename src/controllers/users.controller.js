@@ -9,7 +9,14 @@ async function userSignUp (req, res) {
 };
 
 async function userSignIn (req, res) {
-    res.status(200).send('userSignIn')
+    try {
+        const aux = await connection.query(
+            `SELECT * FROM users;`
+        );
+        res.status(200).send(aux.rows)
+    } catch (error) {
+        res.sendStatus(500);
+    }
 };
 
 export { userSignUp, userSignIn}
