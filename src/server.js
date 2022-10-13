@@ -4,13 +4,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import userRouter from './routers/users.router.js';
+import usersRouter from './routers/users.router.js';
+import linksRouter from './routers/links.router.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(userRouter);
+app.use(usersRouter);
+app.use(linksRouter);
 
 app.listen(
     process.env.PORT,

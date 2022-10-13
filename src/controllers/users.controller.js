@@ -37,4 +37,19 @@ async function userSignIn (req, res) {
     }
 };
 
-export { userSignUp, userSignIn}
+async function getUserById (req, res) {
+    console.log('getUserById');
+    res.sendStatus(200);
+};
+
+async function getUsersRanking (req, res) {
+    console.log('getLinksRanking');
+    res.sendStatus(200);
+};
+
+export {
+    userSignUp,
+    userSignIn,
+    getUserById,
+    getUsersRanking
+}
