@@ -1,11 +1,25 @@
-import { stripHtml } from 'string-strip-html';
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
 import { connection } from '../database/database.js';
 
 async function userSignUp (req, res) {
-    res.status(200).send('userSignUp')
+    const { name, email, password } = res.locals.newUserObj;
+
+    const hashPassword = bcrypt.hashSync(password, 10);
+
+    try {
+        await connection.query(`
+            INSERT INTO users
+            (name, email, password)
+            VALUES
+            ($1, $2, $3);`,
+            [name, email, hashPassword]
+        );
+        res.sendStatus(201);
+    } catch (error) {
+        res.sendStatus(500);
+    }
 };
 
 async function userSignIn (req, res) {
