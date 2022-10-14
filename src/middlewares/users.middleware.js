@@ -77,4 +77,25 @@ async function validateLoginObject (req, res, next) {
     next();
 };
 
-export { validateNewUserObject, validateLoginObject};
+async function validateUserId (req, res, next) {
+    const { userId } = res.locals;
+
+    try {
+        const validUser = await connection.query(`
+            SELECT * FROM users
+            WHERE id = $1;`,
+            [userId]
+        );
+        if (validUser.rows.length === 0){
+            res.status(404).send('user not found');
+            return;
+        };
+        res.locals.userObj = validUser.rows[0];
+    } catch (error) {
+        res.sendStatus(500);
+    }
+
+    next();
+}
+
+export { validateNewUserObject, validateLoginObject, validateUserId};
