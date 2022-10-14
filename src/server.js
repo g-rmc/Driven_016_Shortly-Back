@@ -8,6 +8,7 @@ import usersRouter from './routers/users.router.js';
 import linksRouter from './routers/links.router.js';
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
