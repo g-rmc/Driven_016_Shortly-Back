@@ -1,7 +1,7 @@
 import { stripHtml } from 'string-strip-html';
 
 import { connection } from '../database/database.js';
-import { newUrlSchema } from '../schemas/links.schemas.js'
+import { newUrlSchema, shortUrlSchema } from '../schemas/links.schemas.js'
 
 async function validateAuthorization (req, res, next) {
     const { authorization } = req.headers;
@@ -69,6 +69,32 @@ async function validateShortId (req, res, next){
         return;
     };
     next();
+};
+
+async function validateShortUrl (req, res, next){
+    const validation = shortUrlSchema.validate(req.params, {abortEarly: false});
+    if (validation.error) {
+        res.status(422).send(validation.error.details.map(err => err.message));
+        return;
+    };
+
+    const { shortUrl } = req.params;
+    try {
+        const originalUrl = await connection.query(`
+            SELECT * FROM urls
+            WHERE "shortUrl" = $1;`,
+            [shortUrl]
+        );
+        if (originalUrl.rows.length === 0){
+            res.status(404).send('short url not found');
+            return;
+        };
+        res.locals.originalUrl = originalUrl.rows[0];
+    } catch (error) {
+        res.sendStatus(500);
+        return;
+    };
+    next();
 }
 
-export { validateAuthorization, validateNewLink, validateShortId }
+export { validateAuthorization, validateNewLink, validateShortId, validateShortUrl }

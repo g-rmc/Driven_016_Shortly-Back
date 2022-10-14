@@ -32,8 +32,20 @@ async function getLinkById (req, res) {
 };
 
 async function openShortLink (req,res) {
-    console.log('openShortLink');
-    res.sendStatus(200);
+    const { id, originalUrl } = res.locals.originalUrl;
+
+    try {
+        await connection.query(`
+            INSERT INTO access
+            ("urlId")
+            VALUES
+            ($1);`,
+            [id]
+        );
+        res.redirect(originalUrl);
+    } catch (error) {
+        res.sendStatus(500);
+    }
 };
 
 async function deleteLink (req, res) {
