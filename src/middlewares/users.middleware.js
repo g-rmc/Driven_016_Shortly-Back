@@ -5,18 +5,18 @@ import { connection } from "../database/database.js";
 import { newUserSchema, loginSchema } from "../schemas/users.schemas.js";
 
 async function validateNewUserObject (req, res, next) {
+    const validation = newUserSchema.validate(req.body, {abortEarly: false});
+    if (validation.error){
+        res.status(422).send(validation.error.details.map(err => err.message));
+        return;
+    };
+
     const { name, email, password, confirmPassword } = req.body;
     const newUserObj = {
         name: stripHtml(name).result,
         email: stripHtml(email).result,
         password: stripHtml(password).result,
         confirmPassword: stripHtml(confirmPassword).result
-    };
-
-    const validation = newUserSchema.validate(newUserObj, {abortEarly: false});
-    if (validation.error){
-        res.status(422).send(validation.error.details.map(err => err.message));
-        return;
     };
 
     try {
@@ -42,16 +42,16 @@ async function validateNewUserObject (req, res, next) {
 };
 
 async function validateLoginObject (req, res, next) {
+    const validation = loginSchema.validate(req.body, {abortEarly: false});
+    if (validation.error) {
+        res.status(422).send(validation.error.details.map(err => err.message));
+        return;
+    };
+
     const { email, password } = req.body;
     const loginObj = {
         email: stripHtml(email).result,
         password: stripHtml(password).result
-    }
-
-    const validation = loginSchema.validate(loginObj, {abortEarly: false});
-    if (validation.error) {
-        res.status(422).send(validation.error.details.map(err => err.message));
-        return;
     };
 
     try {

@@ -1,7 +1,12 @@
 import { connection } from '../database/database.js';
 
 async function createLink (req, res) {
-    console.log('createLink');
+    const userId = res.locals.userId;
+    const { originalUrl } = res.locals.newLinkObj;
+
+    console.log(userId);
+    console.log(originalUrl);
+
     res.sendStatus(200);
 };
 

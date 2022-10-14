@@ -5,8 +5,6 @@
 -- Dumped from database version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
 -- Dumped by pg_dump version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
 
--- Started on 2022-10-11 22:22:47 -03
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -23,8 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 216 (class 1259 OID 17110)
--- Name: access; Type: TABLE; Schema: public; Owner: postgres
+-- Name: access; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.access (
@@ -34,11 +31,8 @@ CREATE TABLE public.access (
 );
 
 
-ALTER TABLE public.access OWNER TO postgres;
-
 --
--- TOC entry 215 (class 1259 OID 17109)
--- Name: access_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: access_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.access_id_seq
@@ -50,20 +44,15 @@ CREATE SEQUENCE public.access_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.access_id_seq OWNER TO postgres;
-
 --
--- TOC entry 3395 (class 0 OID 0)
--- Dependencies: 215
--- Name: access_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: access_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.access_id_seq OWNED BY public.access.id;
 
 
 --
--- TOC entry 214 (class 1259 OID 17095)
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.sessions (
@@ -74,11 +63,8 @@ CREATE TABLE public.sessions (
 );
 
 
-ALTER TABLE public.sessions OWNER TO postgres;
-
 --
--- TOC entry 213 (class 1259 OID 17094)
--- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.sessions_id_seq
@@ -90,20 +76,15 @@ CREATE SEQUENCE public.sessions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sessions_id_seq OWNER TO postgres;
-
 --
--- TOC entry 3396 (class 0 OID 0)
--- Dependencies: 213
--- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 
 
 --
--- TOC entry 212 (class 1259 OID 17080)
--- Name: urls; Type: TABLE; Schema: public; Owner: postgres
+-- Name: urls; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.urls (
@@ -115,11 +96,8 @@ CREATE TABLE public.urls (
 );
 
 
-ALTER TABLE public.urls OWNER TO postgres;
-
 --
--- TOC entry 211 (class 1259 OID 17079)
--- Name: urls_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: urls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.urls_id_seq
@@ -131,20 +109,15 @@ CREATE SEQUENCE public.urls_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.urls_id_seq OWNER TO postgres;
-
 --
--- TOC entry 3397 (class 0 OID 0)
--- Dependencies: 211
--- Name: urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.urls_id_seq OWNED BY public.urls.id;
 
 
 --
--- TOC entry 210 (class 1259 OID 17068)
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -156,11 +129,8 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
-
 --
--- TOC entry 209 (class 1259 OID 17067)
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -172,128 +142,98 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO postgres;
-
 --
--- TOC entry 3398 (class 0 OID 0)
--- Dependencies: 209
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- TOC entry 3228 (class 2604 OID 17113)
--- Name: access id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: access id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.access ALTER COLUMN id SET DEFAULT nextval('public.access_id_seq'::regclass);
 
 
 --
--- TOC entry 3226 (class 2604 OID 17098)
--- Name: sessions id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: sessions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.sessions_id_seq'::regclass);
 
 
 --
--- TOC entry 3224 (class 2604 OID 17083)
--- Name: urls id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: urls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.urls ALTER COLUMN id SET DEFAULT nextval('public.urls_id_seq'::regclass);
 
 
 --
--- TOC entry 3222 (class 2604 OID 17071)
--- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- TOC entry 3389 (class 0 OID 17110)
--- Dependencies: 216
--- Data for Name: access; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: access; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.access (id, "urlId", "createdAt") FROM stdin;
-\.
 
 
 --
--- TOC entry 3387 (class 0 OID 17095)
--- Dependencies: 214
--- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.sessions (id, "createdAt", "userId", "userToken") FROM stdin;
-\.
+INSERT INTO public.sessions VALUES (2, '2022-10-13 16:06:25.807046', 1, 'd38a0dc3-231d-480e-a9c5-3dcd54ca3411');
 
 
 --
--- TOC entry 3385 (class 0 OID 17080)
--- Dependencies: 212
--- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.urls (id, "createdAt", "userId", "originalUrl", "shortUrl") FROM stdin;
-\.
 
 
 --
--- TOC entry 3383 (class 0 OID 17068)
--- Dependencies: 210
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.users (id, "createdAt", name, email, password) FROM stdin;
-\.
+INSERT INTO public.users VALUES (1, '2022-10-13 15:32:09.62803', 'João', 'joao@driven.com.br', '$2b$10$/vQFQCeCO33wWaKuHU9fouPe1oVC7IaMCj5OY2mTcKl911zCjlWeW');
+INSERT INTO public.users VALUES (2, '2022-10-13 15:46:52.741448', 'Maria', 'maria@driven.com.br', '$2b$10$d2usIbANixGMNhpvaaCtR.Bs6QxnuK/SNBFi0leQieyRJi3qg4IjS');
 
 
 --
--- TOC entry 3399 (class 0 OID 0)
--- Dependencies: 215
--- Name: access_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: access_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.access_id_seq', 1, false);
 
 
 --
--- TOC entry 3400 (class 0 OID 0)
--- Dependencies: 213
--- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
 
 
 --
--- TOC entry 3401 (class 0 OID 0)
--- Dependencies: 211
--- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 
 
 --
--- TOC entry 3402 (class 0 OID 0)
--- Dependencies: 209
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --
--- TOC entry 3239 (class 2606 OID 17116)
--- Name: access access_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: access access_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.access
@@ -301,8 +241,7 @@ ALTER TABLE ONLY public.access
 
 
 --
--- TOC entry 3237 (class 2606 OID 17103)
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
@@ -310,8 +249,7 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- TOC entry 3235 (class 2606 OID 17088)
--- Name: urls urls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: urls urls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.urls
@@ -319,8 +257,7 @@ ALTER TABLE ONLY public.urls
 
 
 --
--- TOC entry 3231 (class 2606 OID 17078)
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -328,8 +265,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3233 (class 2606 OID 17076)
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -337,8 +273,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3242 (class 2606 OID 17117)
--- Name: access access_urlId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: access access_urlId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.access
@@ -346,8 +281,7 @@ ALTER TABLE ONLY public.access
 
 
 --
--- TOC entry 3241 (class 2606 OID 17104)
--- Name: sessions sessions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sessions sessions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
@@ -355,15 +289,12 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- TOC entry 3240 (class 2606 OID 17089)
--- Name: urls urls_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: urls urls_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.urls
     ADD CONSTRAINT "urls_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
-
--- Completed on 2022-10-11 22:22:47 -03
 
 --
 -- PostgreSQL database dump complete
