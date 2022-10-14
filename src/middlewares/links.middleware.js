@@ -43,6 +43,32 @@ async function validateNewLink (req, res, next){
     res.locals.newLinkObj = newLinkObj;
 
     next();
+};
+
+async function validateShortId (req, res, next){
+    const { id } = req.params;
+
+    if (isNaN(Number(id))){
+        res.status(422).send('invalid id');
+        return;
+    };
+
+    try {
+        const validId = await connection.query(`
+            SELECT * FROM urls
+            WHERE id = $1;`,
+            [id]
+        );
+        if (validId.rows.length === 0){
+            res.status(404).send('id not found');
+            return;
+        };
+        res.locals.urlObj = validId.rows[0];
+    } catch (error) {
+        res.sendStatus(500);
+        return;
+    };
+    next();
 }
 
-export { validateAuthorization, validateNewLink }
+export { validateAuthorization, validateNewLink, validateShortId }

@@ -22,8 +22,13 @@ async function createLink (req, res) {
 };
 
 async function getLinkById (req, res) {
-    console.log('getLinkById');
-    res.sendStatus(200);
+    const { id, originalUrl, shortUrl } = res.locals.urlObj;
+
+    res.send({
+        id,
+        shortUrl,
+        url: originalUrl
+    });
 };
 
 async function openShortLink (req,res) {
