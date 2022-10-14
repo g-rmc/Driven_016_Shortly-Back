@@ -12,15 +12,6 @@ async function validateAuthorization (req, res, next) {
         return;
     };
 
-    const validation = newUrlSchema.validate(req.body, {abortEarly: false});
-    if (validation.error) {
-        res.status(422).send(validation.error.details.map(err => err.message));
-        return;
-    };
-
-    const { url } = req.body;
-    const newLinkObj = { originalUrl: stripHtml(url).result};
-
     try {
         const validSession = await connection.query(`
             SELECT * FROM sessions
@@ -37,8 +28,21 @@ async function validateAuthorization (req, res, next) {
         return;
     };
 
-    res.locals.newLinkObj = newLinkObj;
     next();
 };
 
-export { validateAuthorization }
+async function validateNewLink (req, res, next){
+    const validation = newUrlSchema.validate(req.body, {abortEarly: false});
+    if (validation.error) {
+        res.status(422).send(validation.error.details.map(err => err.message));
+        return;
+    };
+
+    const { url } = req.body;
+    const newLinkObj = { originalUrl: stripHtml(url).result};
+    res.locals.newLinkObj = newLinkObj;
+
+    next();
+}
+
+export { validateAuthorization, validateNewLink }

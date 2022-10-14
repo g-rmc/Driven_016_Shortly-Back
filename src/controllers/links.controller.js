@@ -1,13 +1,24 @@
+import { nanoid } from 'nanoid';
+
 import { connection } from '../database/database.js';
 
 async function createLink (req, res) {
     const userId = res.locals.userId;
     const { originalUrl } = res.locals.newLinkObj;
+    const shortUrl = nanoid(8);
 
-    console.log(userId);
-    console.log(originalUrl);
-
-    res.sendStatus(200);
+    try {
+        await connection.query(`
+            INSERT INTO urls
+            ("userId", "originalUrl", "shortUrl")  
+            VALUES
+            ($1, $2, $3);`,
+            [userId, originalUrl, shortUrl]
+        );
+        res.status(201).send({shortUrl});
+    } catch (error) {
+        res.sendStatus(500);
+    }
 };
 
 async function getLinkById (req, res) {
