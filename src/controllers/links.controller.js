@@ -49,8 +49,28 @@ async function openShortLink (req,res) {
 };
 
 async function deleteLink (req, res) {
-    console.log('deleteLink');
-    res.sendStatus(200);
+    const { urlObj, userId } = res.locals;
+
+    if (urlObj.userId != userId) {
+        res.sendStatus(401);
+        return;
+    };
+    
+    try {
+        await connection.query(`
+            DELETE FROM access
+            WHERE "urlId" = $1;`,
+            [urlObj.id]
+        );
+        await connection.query(`
+            DELETE FROM urls
+            WHERE id = $1;`,
+            [urlObj.id]
+        );
+        res.sendStatus(204);
+    } catch (error) {
+        res.sendStatus(500);
+    };
 };
 
 export {
