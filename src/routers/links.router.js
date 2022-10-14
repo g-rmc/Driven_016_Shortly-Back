@@ -1,7 +1,8 @@
 import express from 'express';
 
 import { createLink, getLinkById, openShortLink, deleteLink } from '../controllers/links.controller.js';
-import { validateAuthorization, validateNewLink, validateShortId, validateShortUrl } from '../middlewares/links.middleware.js';
+import { validateNewLink, validateShortId, validateShortUrl } from '../middlewares/links.middleware.js';
+import { validateAuthorization } from '../middlewares/authorization.middleware.js';
 
 const router = express.Router();
 
