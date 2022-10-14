@@ -88,8 +88,30 @@ async function getUserById (req, res) {
 };
 
 async function getUsersRanking (req, res) {
-    console.log('getLinksRanking');
-    res.sendStatus(200);
+    try {
+        const ranking = await connection.query(`
+            SELECT 
+                u2.id,
+                u2.name,
+                COUNT (u1.id) AS "linksCount",
+                COUNT (a.id) AS "visitCount"
+            FROM urls AS u1
+            LEFT JOIN access AS a
+                ON u1."id" = a."urlId"
+            RIGHT JOIN users AS u2
+                ON u1."userId" = u2.id
+            GROUP BY
+                u2.id
+            ORDER BY
+                "visitCount" DESC,
+                "linksCount" DESC,
+                name
+            LIMIT 10;
+        `);
+        res.send(ranking.rows);
+    } catch (error) {
+        res.sendStatus(500);
+    }
 };
 
 export {
@@ -97,4 +119,4 @@ export {
     userSignIn,
     getUserById,
     getUsersRanking
-}
+};
