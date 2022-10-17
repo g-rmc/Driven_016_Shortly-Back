@@ -1,7 +1,7 @@
 import { stripHtml } from "string-strip-html";
 import bcrypt from 'bcrypt';
 
-import { connection } from "../database/database.js";
+import { usersRepository } from "../repositories/users.repository.js";
 import { newUserSchema, loginSchema } from "../schemas/users.schemas.js";
 
 async function validateNewUserObject (req, res, next) {
@@ -20,22 +20,15 @@ async function validateNewUserObject (req, res, next) {
     };
 
     try {
-        const newEmail = await connection.query(`
-            SELECT * FROM users
-            WHERE email = $1;`,
-            [newUserObj.email]);
+        const newEmail = await usersRepository.getUserEmail(newUserObj.email);
         if (newEmail.rows.length !== 0){
             res.status(409).send('email already registered');
             return;
-        }
+        };
     } catch (error) {
         res.sendStatus(500);
         return;
     }
-
-    const hashPassword = bcrypt.hashSync(newUserObj.password, 10);
-    delete newUserObj.password;
-    newUserObj.hashPassword = hashPassword;
 
     res.locals.newUserObj = newUserObj;
     next();
@@ -55,11 +48,8 @@ async function validateLoginObject (req, res, next) {
     };
 
     try {
-        const validUser = await connection.query(`
-            SELECT * FROM users
-            WHERE email = $1;`,
-            [loginObj.email]
-        );
+        const validUser = await usersRepository.getUserEmail(loginObj.email);
+
         if (validUser.rows.length === 0){
             res.sendStatus(401);
             return;
@@ -70,6 +60,7 @@ async function validateLoginObject (req, res, next) {
         };
         res.locals.userId = validUser.rows[0].id;
     } catch (error) {
+        console.log(error)
         res.sendStatus(500);
         return;
     };
@@ -81,11 +72,7 @@ async function validateUserId (req, res, next) {
     const { userId } = res.locals;
 
     try {
-        const validUser = await connection.query(`
-            SELECT * FROM users
-            WHERE id = $1;`,
-            [userId]
-        );
+        const validUser = await usersRepository.getUserId(userId);
         if (validUser.rows.length === 0){
             res.status(404).send('user not found');
             return;

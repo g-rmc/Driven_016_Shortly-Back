@@ -1,7 +1,7 @@
 import { connection } from "../database/database.js";
 
 async function createUser(name, email, hashPassword){
-    connection.query(`
+    return connection.query(`
         INSERT INTO users
         (name, email, password)
         VALUES
@@ -11,7 +11,7 @@ async function createUser(name, email, hashPassword){
 };
 
 async function createSession(userId, token){
-    connection.query(`
+    return connection.query(`
         INSERT INTO sessions
         ("userId", "userToken")
         VALUES
@@ -69,12 +69,30 @@ async function getRanking(){
             name
         LIMIT 10;
     `);
-}
+};
+
+async function getUserEmail(email){
+    return connection.query(`
+        SELECT * FROM users
+        WHERE email = $1;`,
+        [email]
+    );
+};
+
+async function getUserId(id){
+    return connection.query(`
+        SELECT * FROM users
+        WHERE id = $1;`,
+        [id]
+    );
+};
 
 export const usersRepository = {
     createUser,
     createSession,
     getUserAccess,
     getUserUrls,
-    getRanking
+    getRanking,
+    getUserEmail,
+    getUserId
 };

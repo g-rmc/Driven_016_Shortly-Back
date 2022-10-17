@@ -1,9 +1,12 @@
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 
 import { usersRepository } from '../repositories/users.repository.js';
 
 async function userSignUp (req, res) {
-    const { name, email, hashPassword } = res.locals.newUserObj;
+    const { name, email, password } = res.locals.newUserObj;
+
+    const hashPassword = bcrypt.hashSync(password, 10);
 
     try {
         await usersRepository.createUser(name, email, hashPassword);
