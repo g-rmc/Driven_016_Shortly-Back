@@ -1,6 +1,6 @@
 import { stripHtml } from 'string-strip-html';
 
-import { connection } from '../database/database.js';
+import { linksRepository } from '../repositories/links.repository.js';
 import { newUrlSchema, shortUrlSchema } from '../schemas/links.schemas.js'
 
 async function validateNewLink (req, res, next){
@@ -26,11 +26,7 @@ async function validateShortId (req, res, next){
     };
 
     try {
-        const validId = await connection.query(`
-            SELECT * FROM urls
-            WHERE id = $1;`,
-            [id]
-        );
+        const validId = await linksRepository.getUrlId(id);
         if (validId.rows.length === 0){
             res.status(404).send('id not found');
             return;
@@ -52,11 +48,7 @@ async function validateShortUrl (req, res, next){
 
     const { shortUrl } = req.params;
     try {
-        const originalUrl = await connection.query(`
-            SELECT * FROM urls
-            WHERE "shortUrl" = $1;`,
-            [shortUrl]
-        );
+        const originalUrl = await linksRepository.getShortUrl(shortUrl);
         if (originalUrl.rows.length === 0){
             res.status(404).send('short url not found');
             return;

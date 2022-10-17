@@ -36,9 +36,27 @@ async function deleteUrl(id){
     );
 };
 
+async function getUrlId(id){
+    return connection.query(`
+        SELECT * FROM urls
+        WHERE id = $1;`,
+        [id]
+    );
+};
+
+async function getShortUrl(shortUrl){
+    return connection.query(`
+        SELECT * FROM urls
+        WHERE "shortUrl" = $1;`,
+        [shortUrl]
+    );
+};
+
 export const linksRepository = {
     createUrl,
     createAccess,
     deleteAccess,
-    deleteUrl
+    deleteUrl,
+    getUrlId,
+    getShortUrl
 }
