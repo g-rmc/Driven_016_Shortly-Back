@@ -87,6 +87,14 @@ async function getUserId(id){
     );
 };
 
+async function getSessionToken(token){
+    return connection.query(`
+        SELECT * FROM sessions
+        WHERE "userToken" = $1;`,
+        [token]
+    );
+}
+
 export const usersRepository = {
     createUser,
     createSession,
@@ -94,5 +102,6 @@ export const usersRepository = {
     getUserUrls,
     getRanking,
     getUserEmail,
-    getUserId
+    getUserId,
+    getSessionToken
 };

@@ -1,5 +1,5 @@
-import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { usersRepository } from '../repositories/users.repository.js';
 
@@ -17,8 +17,14 @@ async function userSignUp (req, res) {
 };
 
 async function userSignIn (req, res) {
-    const token = uuid();
     const userId = res.locals.userId;
+    const token = jwt.sign(
+        {userId},
+        process.env.TOKEN_SECRET,
+        {
+            expiresIn: 2 * 24 * 60 * 60
+        }
+    );
 
     try {
         await usersRepository.createSession(userId, token);
