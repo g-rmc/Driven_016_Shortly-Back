@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { connection } from '../database/database.js';
+import { linksRepository } from '../repositories/links.repository.js';
 
 async function createLink (req, res) {
     const userId = res.locals.userId;
@@ -8,13 +8,7 @@ async function createLink (req, res) {
     const shortUrl = nanoid(8);
 
     try {
-        await connection.query(`
-            INSERT INTO urls
-            ("userId", "originalUrl", "shortUrl")  
-            VALUES
-            ($1, $2, $3);`,
-            [userId, originalUrl, shortUrl]
-        );
+        await linksRepository.createUrl(userId, originalUrl, shortUrl);
         res.status(201).send({shortUrl});
     } catch (error) {
         res.sendStatus(500);
@@ -35,13 +29,7 @@ async function openShortLink (req,res) {
     const { id, originalUrl } = res.locals.originalUrl;
 
     try {
-        await connection.query(`
-            INSERT INTO access
-            ("urlId")
-            VALUES
-            ($1);`,
-            [id]
-        );
+        await linksRepository.createAccess(id);
         res.redirect(originalUrl);
     } catch (error) {
         res.sendStatus(500);
@@ -57,16 +45,8 @@ async function deleteLink (req, res) {
     };
     
     try {
-        await connection.query(`
-            DELETE FROM access
-            WHERE "urlId" = $1;`,
-            [urlObj.id]
-        );
-        await connection.query(`
-            DELETE FROM urls
-            WHERE id = $1;`,
-            [urlObj.id]
-        );
+        await linksRepository.deleteAccess(urlObj.id);
+        await linksRepository.deleteUrl(urlObj.id);
         res.sendStatus(204);
     } catch (error) {
         res.sendStatus(500);
