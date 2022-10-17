@@ -60,7 +60,6 @@ async function validateLoginObject (req, res, next) {
         };
         res.locals.userId = validUser.rows[0].id;
     } catch (error) {
-        console.log(error)
         res.sendStatus(500);
         return;
     };
