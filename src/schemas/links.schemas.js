@@ -8,4 +8,4 @@ const shortUrlSchema = joi.object({
     shortUrl: joi.string().length(8).required()
 });
 
-export { newUrlSchema, shortUrlSchema }
+export { newUrlSchema, shortUrlSchema };

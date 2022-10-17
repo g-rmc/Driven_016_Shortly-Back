@@ -39,7 +39,7 @@ async function openShortLink (req,res) {
 async function deleteLink (req, res) {
     const { urlObj, userId } = res.locals;
 
-    if (urlObj.userId != userId) {
+    if (urlObj.userId !== userId) {
         res.sendStatus(401);
         return;
     };
